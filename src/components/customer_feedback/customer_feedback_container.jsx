@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import IntlTelInput from 'react-intl-tel-input';
 import spinner from '../../assets/images/spinner.png';
 import * as actions from './customer_feedback_actions';
+import Login from '../login/login_container';
 
-const mapPropsToState = (dispatch) => ({
+
+const mapDispatchToProps = (dispatch) => ({
     sendMessage: (payload, success, fail) => dispatch(actions.sendMessage(payload, success, fail)),
 });
 
@@ -174,6 +176,7 @@ export class CustomerFeedback extends React.Component {
         } = this.state;
         return (
             <div className="customer-feedback-container">
+                <Login />
                 <h1>Contact</h1>
                 <p>
                     Do you need help with anything? Have you got feedback for us? Whatever it is, we would love to hear from you.
@@ -206,8 +209,8 @@ export class CustomerFeedback extends React.Component {
                         />
                     </div>
                     <div className="row">
-                        <div className="send-message-button-wrapper col-md-12">
-                            <button disabled={sendButtonClicked} className="send-message-button" onClick={this.sendMessage}>
+                        <div className="action-button-wrapper col-md-12">
+                            <button disabled={sendButtonClicked} className="action-button" onClick={this.sendMessage}>
                                 SEND YOUR MESSAGE
                                 <img src={sendButtonClicked ? spinner : null} className={sendButtonClicked ? 'show-spinner' : ''}/>
                             </button>
@@ -231,4 +234,4 @@ export class CustomerFeedback extends React.Component {
     }
 }
 
-export default connect(null, mapPropsToState)(CustomerFeedback);
+export default connect(null, mapDispatchToProps)(CustomerFeedback);

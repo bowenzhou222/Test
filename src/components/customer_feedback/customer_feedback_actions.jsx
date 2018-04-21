@@ -10,7 +10,7 @@ export function sendMessage(payload, success, fail) {
             } else {
                 if (responseText && fail) {
                     responseText.then((t) => {fail(t)});
-                } else {
+                } else if(fail){
                     fail('Error when sending message. Please try again');
                 }
             }
