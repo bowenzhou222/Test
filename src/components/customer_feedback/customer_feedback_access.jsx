@@ -8,6 +8,7 @@ export const sendMessage = payload => {
         headers: new Headers()
             .append('Content-Type', 'application/json'),
         body: JSON.stringify(payload),
+        credentials: 'include',
     }
 
     return fetch(url, options)
