@@ -117,7 +117,28 @@ p {
                 font-weight: 600;
                 color: $white;
                 outline: none;
+          
+                &:disabled {
+                    background-color: $gray-light;
+                }
             }
         }
     }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.show-spinner {
+    margin-left: 20px;
+    animation-name: rotate;
+    animation-duration: 0.9s;
+    transform: rotate(0deg);
+    animation-iteration-count: infinite;
 }

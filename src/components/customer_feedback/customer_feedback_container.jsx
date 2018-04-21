@@ -1,5 +1,5 @@
 import React from 'react';
-import PromptUnsavedMessage from '../prompt';
+import spinner from '../../assets/images/spinner.png';
 
 const InputField = ({detail, update}) => (
     <div>
@@ -70,6 +70,7 @@ class CustomerFeedback extends React.Component {
         };
 
         this.updateField = this.updateField.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
     }
 
     updateField(field, value) {
@@ -80,6 +81,13 @@ class CustomerFeedback extends React.Component {
             details: Object.assign({}, this.state.details, { [field]: detail }),
             unsavedChanges: true,
         });
+    }
+
+    sendMessage() {
+        this.setState({
+            sendButtonClicked: true,
+        });
+        console.log('clicked')
     }
 
     render() {
@@ -120,14 +128,13 @@ class CustomerFeedback extends React.Component {
 
                     <div className="row">
                         <div className="send-message-button-wrapper col-md-12">
-                            <button className="send-message-button">
+                            <button disabled={sendButtonClicked} className="send-message-button" onClick={this.sendMessage}>
                                 SEND YOUR MESSAGE
-                                <i className={sendButtonClicked ? 'show-spinner' : ''}/>
+                                <img src={sendButtonClicked ? spinner : null} className={sendButtonClicked ? 'show-spinner' : ''}/>
                             </button>
                         </div>
                     </div>
 
-                    <PromptUnsavedMessage unsavedChanges={unsavedChanges} />
                 </div>
             </div>
         );
