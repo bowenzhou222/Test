@@ -40,6 +40,7 @@ p {
     padding-right: 15px;
     position: fixed;
     top: 0px;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,6 +68,45 @@ p {
             margin-right: 15px;
             font-size: 18px;
             color: $white;
+        }
+    }
+
+    .navbar-toggle-button {
+        display: none;
+    }
+    
+    @media (max-width: 992px) {
+        .navbar-toggle-button {
+            display: block;
+            box-shadow: none;
+            border: 1px solid $white;
+            border-radius: 34px;
+            padding: 5px 20px;
+            color: $white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .display-none {
+            display: none;
+        }
+
+        .navbar-help-links {
+            flex-direction: column;
+            top: $navbar-height;
+            left: 0px;
+            position: fixed;
+            width: 100%;
+            border: 2px solid $cammy;
+            background-color: $white;
+
+            a {
+                width: 100%;
+                text-align: center;
+                color: $cammy;
+                padding: 10px 0px;
+                border-bottom: 1px solid $cammy;
+            }
         }
     }
 }
