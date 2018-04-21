@@ -220,3 +220,13 @@ p {
         justify-content: center;
     }
 }
+
+.intl-tel-input {
+    &.country-list {
+        width: 100%;
+    }
+
+    ul.country-list {
+        width: 100%;
+    }
+}

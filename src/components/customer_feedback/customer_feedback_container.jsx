@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import IntlTelInput from 'react-intl-tel-input';
 import spinner from '../../assets/images/spinner.png';
 import * as actions from './customer_feedback_actions';
 
@@ -17,7 +18,7 @@ const SuccessfulMessageModal = ({closeModal}) => (
     </div>
 );
 
-const InputField = ({detail, update}) => (
+const InputField = ({detail, update, updatePhoneNumber}) => (
     <div>
         {
             <div className={detail.field === 'message' ? 'col-md-12' : 'col-md-6'}>
@@ -32,12 +33,23 @@ const InputField = ({detail, update}) => (
                         onChange={(e) => update(detail.field, e.target.value)}
                     />
                     :
-                    <input
-                        id={detail.field} type="text"
-                        placeholder={detail.placeHolder}
-                        value={detail.value}
-                        onChange={(e) => update(detail.field, e.target.value)}
-                    />
+                        detail.field !== 'phoneNumber'
+                        ?
+                        <input
+                            id={detail.field} type="text"
+                            placeholder={detail.placeHolder}
+                            value={detail.value}
+                            onChange={(e) => update(detail.field, e.target.value)}
+                        />
+                        :
+                        <IntlTelInput
+                            css={['intl-tel-input country-list', '']}
+                            utilsScript={'libphonenumber.js'}
+                            defaultCountry={'au'}
+                            preferredCountries={['au']}
+                            onPhoneNumberChange={updatePhoneNumber}
+                            value={detail.value}
+                        />
                 }
             </div>
         }
@@ -91,6 +103,7 @@ class CustomerFeedback extends React.Component {
         this.sendMessage = this.sendMessage.bind(this);
         this.showSuccessfulMessage = this.showSuccessfulMessage.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.updatePhoneNumber = this.updatePhoneNumber.bind(this);
     }
 
     updateField(field, value) {
@@ -144,6 +157,16 @@ class CustomerFeedback extends React.Component {
         this.setState({ shouldShowSuccessfulMessage: false });
     }
 
+    updatePhoneNumber(status, value, countryData, number, id) {
+        let detail = this.state.details.phoneNumber;
+        detail = Object.assign({}, detail, { value: number && number.trim() });
+
+        this.setState({
+            details: Object.assign({}, this.state.details, { phoneNumber: detail }),
+            unsavedChanges: true,
+        });
+    }
+
     render() {
         const {
             details, sendButtonClicked, unsavedChanges,
@@ -169,7 +192,7 @@ class CustomerFeedback extends React.Component {
                     <div className="row">
                         <InputField
                             detail={details.phoneNumber}
-                            update={this.updateField}
+                            updatePhoneNumber={this.updatePhoneNumber}
                         />
                         <InputField
                             detail={details.subject}
