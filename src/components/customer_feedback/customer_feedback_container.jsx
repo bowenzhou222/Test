@@ -1,5 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import spinner from '../../assets/images/spinner.png';
+import * as actions from './customer_feedback_actions';
+
+const mapPropsToState = (dispatch) => ({
+    sendMessage: (payload, success, fail) => dispatch(actions.sendMessage(payload, success, fail)),
+});
+
+const SuccessfulMessageModal = ({closeModal}) => (
+    <div className="full-screen-modal-wrapper" onClick={closeModal}>
+        <div className="modal-content">
+            <div className="successful-message">
+                Thank you for your feedback!
+            </div>
+        </div>
+    </div>
+);
 
 const InputField = ({detail, update}) => (
     <div>
@@ -67,10 +83,14 @@ class CustomerFeedback extends React.Component {
             },
             sendButtonClicked: false,
             unsavedChanges: false,
+            shouldShowSuccessfulMessage: false,
+            sendMessageApiError: null,
         };
 
         this.updateField = this.updateField.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
+        this.showSuccessfulMessage = this.showSuccessfulMessage.bind(this);
+        this.closeModal = this.closeModal.bind(this);
     }
 
     updateField(field, value) {
@@ -83,15 +103,52 @@ class CustomerFeedback extends React.Component {
         });
     }
 
+    showSuccessfulMessage() {
+        this.setState({
+            shouldShowSuccessfulMessage: true,
+            sendMessageApiError: null,
+        });
+    }
+
     sendMessage() {
+        const { sendMessage } = this.props;
+        const { details } = this.state;
+        const payload = {
+            customerName: details.name.value.trim(),
+            customerEmail: details.email.value.trim(),
+            customerPhoneNumber: details.phoneNumber.value.replace(/\s+/g, ''),
+            customerSubject: details.subject.value.trim(),
+            customerMessage: details.message.value.trim(),
+        };
+
         this.setState({
             sendButtonClicked: true,
         });
-        console.log('clicked')
+
+        sendMessage(
+            payload,
+            () => {
+                this.showSuccessfulMessage();
+                this.setState({ sendButtonClicked: false });
+            },
+            (apiError) => {
+                this.setState({
+                    sendMessageApiError: apiError,
+                    sendButtonClicked: false,
+                });
+            },
+        );
+    }
+
+    closeModal() {
+        this.setState({ shouldShowSuccessfulMessage: false });
     }
 
     render() {
-        const { details, sendButtonClicked, unsavedChanges } = this.state;
+        const {
+            details, sendButtonClicked, unsavedChanges,
+            shouldShowSuccessfulMessage, sendMessageApiError,
+        } = this.state;
         return (
             <div className="customer-feedback-container">
                 <h1>Contact</h1>
@@ -125,7 +182,6 @@ class CustomerFeedback extends React.Component {
                             update={this.updateField}                                                    
                         />
                     </div>
-
                     <div className="row">
                         <div className="send-message-button-wrapper col-md-12">
                             <button disabled={sendButtonClicked} className="send-message-button" onClick={this.sendMessage}>
@@ -134,11 +190,22 @@ class CustomerFeedback extends React.Component {
                             </button>
                         </div>
                     </div>
-
+                    {
+                        sendMessageApiError &&
+                        <div className="error-message">
+                            {sendMessageApiError}
+                        </div>
+                    }
+                    {
+                        shouldShowSuccessfulMessage &&
+                        <SuccessfulMessageModal
+                            closeModal={this.closeModal}
+                        />
+                    }
                 </div>
             </div>
         );
     }
 }
 
-export default CustomerFeedback;
+export default connect(null, mapPropsToState)(CustomerFeedback);
