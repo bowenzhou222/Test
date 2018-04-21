@@ -17,17 +17,23 @@ $yellow: #ffe757;
 $pink: #ff5777;
 $purple: #6348D5;
 
-$facebook: #3b5998;
-$twitter: #1da1f2;
-$linkedin: #0077B5;
 $cammy: #14a8ca;
 
 $border: #e8e8e9;
 $background: #fafafa;
 
-$app-max-width: 720px;
+$input-background: #e8f6fa;
+$input-border: #c4e9f2;
+
 $navbar-height: 80px;
-$navbar-width: 260px;
+
+html {
+    -webkit-font-smoothing: antialiased;
+}
+
+p {
+    font-size: 16px;
+}
 
 .sticky-navbar {
     padding-left: 15px;
@@ -61,6 +67,57 @@ $navbar-width: 260px;
             margin-right: 15px;
             font-size: 18px;
             color: $white;
+        }
+    }
+}
+
+.customer-feedback-container {
+    margin-top: $navbar-height;
+    padding: 25px 50px;
+
+    h1 {
+        font-weight: 800;
+
+        ~p {
+            margin-top: 25px;
+        }
+    }
+
+    .feedback-form-container {
+        margin-top: 40px;
+
+        label {
+            font-size: 16px;
+            padding-top: 15px;
+        }
+
+        input, textarea {
+            width: 100%;
+            background-color: $input-background;
+            border: 1px solid $input-border;
+            border-radius: 3px;
+            padding: 8px 12px;
+
+            &:focus {
+                background-color: $white;
+            }
+        }
+
+        .send-message-button-wrapper {
+            padding-top: 25px;
+            padding-bottom: 25px;
+
+            .send-message-button {
+                width: 100%;
+                border: 1px solid $input-border;
+                border-radius: 30px;
+                background-color: $cammy;
+                padding: 8px 12px;
+                font-size: 16px;
+                font-weight: 600;
+                color: $white;
+                outline: none;
+            }
         }
     }
 }
