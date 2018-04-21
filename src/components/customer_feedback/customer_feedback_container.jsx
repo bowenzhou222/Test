@@ -8,7 +8,7 @@ const mapPropsToState = (dispatch) => ({
     sendMessage: (payload, success, fail) => dispatch(actions.sendMessage(payload, success, fail)),
 });
 
-const SuccessfulMessageModal = ({closeModal}) => (
+export const SuccessfulMessageModal = ({closeModal}) => (
     <div className="full-screen-modal-wrapper" onClick={closeModal}>
         <div className="modal-content">
             <div className="successful-message">
@@ -18,7 +18,7 @@ const SuccessfulMessageModal = ({closeModal}) => (
     </div>
 );
 
-const InputField = ({detail, update, updatePhoneNumber}) => (
+export const InputField = ({detail, update, updatePhoneNumber}) => (
     <div>
         {
             <div className={detail.field === 'message' ? 'col-md-12' : 'col-md-6'}>
@@ -56,7 +56,7 @@ const InputField = ({detail, update, updatePhoneNumber}) => (
     </div>
 );
 
-class CustomerFeedback extends React.Component {
+export class CustomerFeedback extends React.Component {
     constructor(props) {
         super(props);
 
