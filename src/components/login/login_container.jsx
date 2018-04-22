@@ -123,11 +123,11 @@ export class Login extends React.Component {
                     <Messages user={user}/>
                     :
                     <div>
-                        <a onClick={this.openRegisterForm}>
+                        <a className="open-register-form-link" onClick={this.openRegisterForm}>
                             Register&nbsp;
                         </a>
                         or &nbsp;
-                        <a onClick={this.openLoginForm}>
+                        <a className="open-login-form-link" onClick={this.openLoginForm}>
                             Login&nbsp;
                         </a>
                         to view the emails you have sent.

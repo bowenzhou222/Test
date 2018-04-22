@@ -210,7 +210,7 @@ export class CustomerFeedback extends React.Component {
                     </div>
                     <div className="row">
                         <div className="action-button-wrapper col-md-12">
-                            <button disabled={sendButtonClicked} className="action-button" onClick={this.sendMessage}>
+                            <button disabled={sendButtonClicked} className="action-button send-message-button" onClick={this.sendMessage}>
                                 SEND YOUR MESSAGE
                                 <img src={sendButtonClicked ? spinner : null} className={sendButtonClicked ? 'show-spinner' : ''}/>
                             </button>
