@@ -1,7 +1,7 @@
 import { apiUrl } from '../../urls';
 
 export const fetchMessages = email => {
-    const url = `${apiUrl}messages/get?email=${email}`;
+    const url = `${apiUrl}messages/get`;
 
     const options = {
         method: 'GET',
