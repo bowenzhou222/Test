@@ -264,5 +264,33 @@ input, textarea {
     .close-modal-button {
         color: $white;
         text-decoration: underline;
+        cursor: pointer;
     }
+}
+
+.message-modal-wrapper {
+    background-color: $white;
+    height: 80%;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 10%;
+    padding: 25px;
+    overflow-y: scroll;
+
+    .close-modal-button-wrapper {
+        .close-modal-button {
+            color: $black;
+        }
+    }
+
+    .message-container {
+        border: 1px solid $gray-light;
+        box-shadow: 0px 0px 5px $gray-light;
+        margin: 30px 0px;
+        padding: 10px;
+    }
+}
+
+.fetch-messages-link {
+    cursor: pointer;
 }

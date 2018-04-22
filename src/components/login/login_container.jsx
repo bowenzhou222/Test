@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import spinner from '../../assets/images/spinner.png';
 import {register, login} from './login_actions';
+import Messages from '../sent_messages/sent_messages_container';
 
 
 const mapStateToProps = ({ loginReducer }) => ({
@@ -72,7 +73,11 @@ export class Login extends React.Component {
         login(
             { email, password },
             () => {
-                this.setState({ loginButtonClicked: false });
+                this.setState({
+                    loginButtonClicked: false,
+                    loginError: null,
+                    isLoginFormOpen: false,
+                });
             },
             (apiError) => {
                 this.setState({
@@ -115,11 +120,7 @@ export class Login extends React.Component {
             <div className="login-container">
                 {
                     user && user.email ?
-                    <div>   
-                        <a onClick={null}>
-                            Click here to view the emails sent from {user.email}
-                        </a>
-                    </div>
+                    <Messages user={user}/>
                     :
                     <div>
                         <a onClick={this.openRegisterForm}>

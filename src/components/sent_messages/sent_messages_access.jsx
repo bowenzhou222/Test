@@ -1,28 +1,26 @@
 import { apiUrl } from '../../urls';
 
+export const fetchMessages = email => {
+    const url = `${apiUrl}messages/get?email=${email}`;
 
-export const sendMessage = payload => {
-    const url = `${apiUrl}send`
     const options = {
-        method: 'POST',
+        method: 'GET',
         headers: new Headers({
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         }),
-        body: JSON.stringify(payload),
         credentials: 'include',
-    }
+    };
 
     return fetch(url, options)
-        .then(res => 
-            res.ok
-            ? Promise.resolve()
+        .then(res => res.ok
+            ? Promise.resolve(res.json())
             : Promise.reject({
                 statusCode: res.status,
                 responseText: res.text()
             })
         )
         .then(
-            () => ({ ok: true }),
+            (messages) => ({ ok: true, messages }),
             error => ({
                 ok: false,
                 statusCode: error.statusCode,
